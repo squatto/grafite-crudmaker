@@ -8,7 +8,7 @@ class DatabaseGeneratorTest extends TestCase
     protected $config;
     protected $artisanMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->generator = new DatabaseGenerator();
@@ -98,7 +98,7 @@ class DatabaseGeneratorTest extends TestCase
         return $migrations;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         array_map('unlink', glob($this->config['_path_migrations_'].'/*'));

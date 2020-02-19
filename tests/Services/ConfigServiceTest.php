@@ -9,7 +9,7 @@ class ConfigServiceTest extends TestCase
     protected $config;
     protected $app;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->service = app(ConfigService::class);

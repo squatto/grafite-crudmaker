@@ -8,7 +8,7 @@ class CrudSectionGeneratorTest extends TestCase
     protected $generator;
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->generator = new CrudGenerator();
         $this->config = [

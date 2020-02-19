@@ -3,7 +3,7 @@
 
 class ArtisanTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -122,7 +122,7 @@ class ArtisanTest extends TestCase
         $this->assertContains('$factory->define(', $contents);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $files = glob($this->destinationDir.'/database/migrations/*_create_books_table.php');
         @unlink($files[0]);

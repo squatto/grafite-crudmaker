@@ -18,7 +18,7 @@ class CrudServiceTest extends TestCase
     protected $command;
     protected $bar;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
