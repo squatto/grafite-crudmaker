@@ -86,7 +86,7 @@ The migration option will add the migration file to your migrations directory, u
 You can define the table schema with the structure below. The field types should match what would be the Schema builder.
 
 ```shell script
---schema="id:increments,name:string"
+--schema="id:bigIncrements,name:string"
 ```
 
 The following column types are available:
@@ -123,13 +123,13 @@ The following column types are available:
 #### Want further definitions?
 
 ```shell script
---schema="id:increments|first,user_id:integer|unsigned,name:string|nullable|after('id'),age:integer|default(0)"
+--schema="id:bigIncrements|first,user_id:integer|unsigned,name:string|nullable|after('id'),age:integer|default(0)"
 ```
 
 You can even handle some parameters such as:
 
 ```shell script
---schema="id:increments|first,user_id:integer|unsigned,name:string(45)"
+--schema="id:bigIncrements|first,user_id:integer|unsigned,name:string(45)"
 ```
 
 ## Relationships
@@ -183,7 +183,7 @@ Appends to the following Files:
 ```shell script
 php artisan crudmaker:new Book
 --migration
---schema="id:increments,title:string,author:string"
+--schema="id:bigIncrements,title:string,author:string"
 ```
 
 When using the default paths for the components, the following files will be generated:
@@ -206,7 +206,7 @@ When using the default paths for the components, the following files will be gen
 ```shell script
 php artisan crudmaker:new Book_Author
 --migration
---schema="id:increments,firstname:string,lastname:string"
+--schema="id:bigIncrements,firstname:string,lastname:string"
 --withFacade
 ```
 
@@ -232,7 +232,7 @@ When using the default paths for the components, the following files will be gen
 php artisan crudmaker:new Book
 --api
 --migration
---schema="id:increments,title:string,author:string"
+--schema="id:bigIncrements,title:string,author:string"
 ```
 
 When using the default paths for the components, the following files will be generated:
