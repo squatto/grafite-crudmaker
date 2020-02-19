@@ -1,5 +1,8 @@
 # CrudMaker
 
+> IMPORTANT: this fork's entire purpose is to enable compatibility with Laravel 6.x and beyond.  
+> **OUTSIDE OF ENSURING COMPATIBILITY, NO FEATURE ADDITIONS/CHANGES OR BUG FIXES WILL BE MADE!**
+
 **CrudMaker** - An incredibly powerful and some say magical CRUD maker for Laravel
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/squatto/grafite-crudmaker)
@@ -9,7 +12,6 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 ##### Author(s):
 * [Matt Lantz](https://github.com/mlantz) ([@mattylantz](http://twitter.com/mattylantz), mattlantz at gmail dot com) - original [grafite/crudmaker package](https://packagist.org/packages/grafite/crudmaker) author
 * [Scott Carpenter](https://github.com/squatto) - current package author
-
 
 ## Requirements
 
@@ -21,7 +23,7 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| 6.x | 1.5.x | yes |
+| 6.x | 1.5.x | no |
 | 5.6.x | 1.4.x | no |
 | 5.5.x | 1.3.x | no |
 | 5.4.x | 1.2.x | no |
