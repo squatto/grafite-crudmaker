@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.5.0] - 2020-02-18
+
+### Changed
+- Forked package to [squatto/grafite-crudmaker](https://github.com/squatto/grafite-crudmaker)
+  because [GrafiteInc/CrudMaker](https://github.com/GrafiteInc/CrudMaker) is abandoned
+- Changed composer package name to `squatto/grafite-crudmaker`
+- Require PHP 7.2+, Laravel 6.0+
+- Updated dev dependencies
+
 ## [v1.4.5] - 2018-09-03
 
 ### Fixed
