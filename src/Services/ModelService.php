@@ -3,6 +3,7 @@
 namespace Grafite\CrudMaker\Services;
 
 use Grafite\CrudMaker\Services\TableService;
+use Illuminate\Support\Str;
 
 class ModelService
 {
@@ -30,10 +31,10 @@ class ModelService
                 $relation[2] = strtolower(end($relationEnd));
             }
 
-            $method = str_singular($relation[2]);
+            $method = Str::singular($relation[2]);
 
             if (stristr($relation[0], 'many')) {
-                $method = str_plural($relation[2]);
+                $method = Str::plural($relation[2]);
             }
 
             $relationshipMethods .= "\n\tpublic function ".$method.'() {';

@@ -4,6 +4,7 @@ namespace Grafite\CrudMaker\Services;
 
 use Exception;
 use Grafite\CrudMaker\Traits\SchemaTrait;
+use Illuminate\Support\Str;
 
 /**
  * CRUD Validator.
@@ -36,7 +37,7 @@ class ValidatorService
 
                 preg_match('('.self::VALID_COLUMN_NAME_REGEX.')', $columnDetails[0], $columnDetailsType);
 
-                if (!in_array(camel_case($columnDetailsType[0]), $command->columnTypes)) {
+                if (!in_array(Str::camel($columnDetailsType[0]), $command->columnTypes)) {
                     throw new Exception($columnDetailsType[0].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
                 }
             }

@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Grafite\CrudMaker\Services\FileService;
 use Grafite\CrudMaker\Traits\SchemaTrait;
+use Illuminate\Support\Str;
 
 /**
  * Generate the CRUD database components.
@@ -38,11 +39,11 @@ class DatabaseGenerator
     {
         try {
             if (!empty($section)) {
-                $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
-                $tableName = str_plural(strtolower(implode('_', $splitTable)));
+                $migrationName = 'create_'.Str::plural(strtolower(implode('_', $splitTable))).'_table';
+                $tableName = Str::plural(strtolower(implode('_', $splitTable)));
             } else {
-                $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
-                $tableName = str_plural(strtolower(snake_case($table)));
+                $migrationName = 'create_'.Str::plural(strtolower(Str::snake($table))).'_table';
+                $tableName = Str::plural(strtolower(Str::snake($table)));
             }
 
             $command->callSilent('make:migration', [
@@ -73,9 +74,9 @@ class DatabaseGenerator
         $migrationFiles = $this->filesystem->allFiles($this->getMigrationsPath($config));
 
         if (!empty($section)) {
-            $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
+            $migrationName = 'create_'.Str::plural(strtolower(implode('_', $splitTable))).'_table';
         } else {
-            $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
+            $migrationName = 'create_'.Str::plural(strtolower(Str::snake($table))).'_table';
         }
 
         $parsedTable = '';
@@ -110,7 +111,7 @@ class DatabaseGenerator
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
                 $migrationData = $this->filesystem->get($file->getPathname());
-                $migrationData = str_replace("\$table->increments('id');", $parsedTable, $migrationData);
+                $migrationData = str_replace("\$table->bigIncrements('id');", $parsedTable, $migrationData);
                 $this->filesystem->put($file->getPathname(), $migrationData);
             }
         }
