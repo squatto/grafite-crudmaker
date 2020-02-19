@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Grafite\CrudMaker\Generators\CrudGenerator;
 
@@ -8,7 +9,7 @@ class CrudSectionGeneratorTest extends TestCase
     protected $generator;
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->generator = new CrudGenerator();
         $this->config = [
@@ -42,10 +43,10 @@ class CrudSectionGeneratorTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Superman\Api',
             '_namespace_request_' => 'App\Http\Requests\Superman',
             '_lower_case_' => strtolower('testTable'),
-            '_lower_casePlural_' => str_plural(strtolower('testTable')),
-            '_camel_case_' => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_' => str_plural(camel_case('testTable')),
-            '_ucCamel_casePlural_' => ucfirst(str_plural(camel_case('testTable'))),
+            '_lower_casePlural_' => Str::plural(strtolower('testTable')),
+            '_camel_case_' => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_' => Str::plural(Str::camel('testTable')),
+            '_ucCamel_casePlural_' => ucfirst(Str::plural(Str::camel('testTable'))),
             '_table_name_' => 'superman_testtable',
         ];
     }
@@ -58,7 +59,7 @@ class CrudSectionGeneratorTest extends TestCase
         $contents = $this->crud->getChild('Http/Controllers/Superman/Api/TestTablesController.php');
 
         $this->assertTrue($this->crud->hasChild('Http/Controllers/Superman/Api/TestTablesController.php'));
-        $this->assertContains('class TestTablesController extends Controller', $contents->getContent());
+        $this->assertStringContainsString('class TestTablesController extends Controller', $contents->getContent());
     }
 
     public function testControllerGenerator()
@@ -69,7 +70,7 @@ class CrudSectionGeneratorTest extends TestCase
         $this->assertTrue($this->crud->hasChild('Http/Controllers/Superman/TestTablesController.php'));
         $contents = $this->crud->getChild('Http/Controllers/Superman/TestTablesController.php');
 
-        $this->assertContains('class TestTablesController extends Controller', $contents->getContent());
+        $this->assertStringContainsString('class TestTablesController extends Controller', $contents->getContent());
     }
 
     public function testModelGenerator()
@@ -80,7 +81,7 @@ class CrudSectionGeneratorTest extends TestCase
         $contents = $this->crud->getChild('Models/Superman/TestTable.php');
 
         $this->assertTrue($this->crud->hasChild('Models/Superman/TestTable.php'));
-        $this->assertContains('class TestTable', $contents->getContent());
+        $this->assertStringContainsString('class TestTable', $contents->getContent());
     }
 
     public function testRequestGenerator()
@@ -91,7 +92,7 @@ class CrudSectionGeneratorTest extends TestCase
         $contents = $this->crud->getChild('Http/Requests/Superman/TestTableCreateRequest.php');
 
         $this->assertTrue($this->crud->hasChild('Http/Requests/Superman/TestTableCreateRequest.php'));
-        $this->assertContains('class TestTableCreateRequest', $contents->getContent());
+        $this->assertStringContainsString('class TestTableCreateRequest', $contents->getContent());
     }
 
     public function testServiceGenerator()
@@ -102,7 +103,7 @@ class CrudSectionGeneratorTest extends TestCase
         $contents = $this->crud->getChild('Services/Superman/TestTableService.php');
 
         $this->assertTrue($this->crud->hasChild('Services/Superman/TestTableService.php'));
-        $this->assertContains('class TestTableService', $contents->getContent());
+        $this->assertStringContainsString('class TestTableService', $contents->getContent());
     }
 
     public function testRoutesGenerator()
@@ -113,9 +114,9 @@ class CrudSectionGeneratorTest extends TestCase
         $this->generator->createRoutes($this->config, false);
         $contents = $this->crud->getChild('Http/routes.php');
 
-        $this->assertContains('TestTablesController', $contents->getContent());
-        $this->assertContains('\'as\' => \'superman.testtables.search\'', $contents->getContent());
-        $this->assertContains('\'uses\' => \'TestTablesController@search\'', $contents->getContent());
+        $this->assertStringContainsString('TestTablesController', $contents->getContent());
+        $this->assertStringContainsString('\'as\' => \'superman.testtables.search\'', $contents->getContent());
+        $this->assertStringContainsString('\'uses\' => \'TestTablesController@search\'', $contents->getContent());
     }
 
     public function testViewsGenerator()
@@ -126,7 +127,7 @@ class CrudSectionGeneratorTest extends TestCase
         $contents = $this->crud->getChild('resources/views/superman/testtables/index.blade.php');
 
         $this->assertTrue($this->crud->hasChild('resources/views/superman/testtables/index.blade.php'));
-        $this->assertContains('$testtable', $contents->getContent());
+        $this->assertStringContainsString('$testtable', $contents->getContent());
     }
 
     public function testTestGenerator()
@@ -137,11 +138,11 @@ class CrudSectionGeneratorTest extends TestCase
 
         $contents = $this->crud->getChild('tests/Feature/TestTableAcceptanceTest.php');
         $this->assertTrue($this->crud->hasChild('tests/Feature/TestTableAcceptanceTest.php'));
-        $this->assertContains('class TestTableAcceptanceTest', $contents->getContent());
+        $this->assertStringContainsString('class TestTableAcceptanceTest', $contents->getContent());
 
         $contents = $this->crud->getChild('tests/Unit/TestTableServiceTest.php');
         $this->assertTrue($this->crud->hasChild('tests/Unit/TestTableServiceTest.php'));
-        $this->assertContains('class TestTableServiceTest', $contents->getContent());
+        $this->assertStringContainsString('class TestTableServiceTest', $contents->getContent());
     }
 
     public function testTestGeneratorServiceOnly()
@@ -154,7 +155,7 @@ class CrudSectionGeneratorTest extends TestCase
 
         $contents = $this->crud->getChild('tests/Unit/TestTableServiceTest.php');
         $this->assertTrue($this->crud->hasChild('tests/Unit/TestTableServiceTest.php'));
-        $this->assertContains('class TestTableServiceTest', $contents->getContent());
+        $this->assertStringContainsString('class TestTableServiceTest', $contents->getContent());
     }
 
     public function testFactoryGenerator()
@@ -165,7 +166,7 @@ class CrudSectionGeneratorTest extends TestCase
         $this->generator->createFactory($this->config);
         $contents = $this->crud->getChild('database/factories/ModelFactory.php');
 
-        $this->assertContains('TestTable::class', $contents->getContent());
-        $this->assertContains('$factory->define(', $contents->getContent());
+        $this->assertStringContainsString('TestTable::class', $contents->getContent());
+        $this->assertStringContainsString('$factory->define(', $contents->getContent());
     }
 }

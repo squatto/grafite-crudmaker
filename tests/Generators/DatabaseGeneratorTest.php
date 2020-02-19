@@ -8,7 +8,7 @@ class DatabaseGeneratorTest extends TestCase
     protected $config;
     protected $artisanMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->generator = new DatabaseGenerator();
@@ -52,16 +52,16 @@ class DatabaseGeneratorTest extends TestCase
             '',
             'TestTable',
             [],
-            'id:increments,name:string',
+            'id:bigIncrements,name:string',
             $this->command
         );
 
-        $this->assertContains('test_tables', file_get_contents($migrations[0]));
-        $this->assertContains('table->increments(\'id\')', file_get_contents($migrations[0]));
+        $this->assertStringContainsString('test_tables', file_get_contents($migrations[0]));
+        $this->assertStringContainsString('table->bigIncrements(\'id\')', file_get_contents($migrations[0]));
 
-        $this->assertContains('table->increments', $schemaForm);
-        $this->assertContains('table->integer(\'author_id\')', $schemaForm);
-        $this->assertContains('table->string(\'name\')', $schemaForm);
+        $this->assertStringContainsString('table->bigIncrements', $schemaForm);
+        $this->assertStringContainsString('table->integer(\'author_id\')', $schemaForm);
+        $this->assertStringContainsString('table->string(\'name\')', $schemaForm);
     }
 
     public function testCreateSchemaAlternativeLocation()
@@ -73,12 +73,12 @@ class DatabaseGeneratorTest extends TestCase
             '',
             'TestTable',
             [],
-            'id:increments,name:string',
+            'id:bigIncrements,name:string',
             $this->command
         );
 
-        $this->assertContains('table->increments', $schemaForm);
-        $this->assertContains('table->string(\'name\')', $schemaForm);
+        $this->assertStringContainsString('table->bigIncrements', $schemaForm);
+        $this->assertStringContainsString('table->string(\'name\')', $schemaForm);
     }
 
     private function createMigration($location = null)
@@ -98,7 +98,7 @@ class DatabaseGeneratorTest extends TestCase
         return $migrations;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         array_map('unlink', glob($this->config['_path_migrations_'].'/*'));

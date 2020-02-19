@@ -1,28 +1,27 @@
 # CrudMaker
 
-> Unfortunately, we've decided to abandon this library. You're free to fork and maintain your own version if you like.
-
 **CrudMaker** - An incredibly powerful and some say magical CRUD maker for Laravel
 
-[![Build Status](https://travis-ci.org/GrafiteInc/CrudMaker.svg?branch=master)](https://travis-ci.org/GrafiteInc/CrudMaker)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6398c82f417803d3fe6e/maintainability)](https://codeclimate.com/github/GrafiteInc/CrudMaker/maintainability)
-[![Packagist](https://img.shields.io/packagist/dt/grafite/crudmaker.svg)](https://packagist.org/packages/grafite/crudmaker)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/grafite/crudmaker)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/squatto/grafite-crudmaker)
 
 It can generate magical CRUD prototypes rapidly with full testing scripts prepared for you, requiring very little editing. Following SOLID principals it can construct a basic set of components pending on a table name provided in the CLI. The CRUD can be used with singular table entities think: 'books' or 'authors' but, you can also build CRUDs for combined entities that is a parent, and child like structure: 'books_authors'. This will generate a 'books_authors' table and place all components of the authors (controller, service, model etc) into a Books namespace, which means you can then generate 'books_publishers' and have all the components be added as siblings to the authors. Now let's say you went ahead with using the Laracogs starter kit, then you can autobuild your CRUDs with them bootstrapped, which means they're already wrapped up as view extensions of the dashboard content which means you're even closer to being done your application.
 
 ##### Author(s):
-* [Matt Lantz](https://github.com/mlantz) ([@mattylantz](http://twitter.com/mattylantz), mattlantz at gmail dot com)
+* [Matt Lantz](https://github.com/mlantz) ([@mattylantz](http://twitter.com/mattylantz), mattlantz at gmail dot com) - original [grafite/crudmaker package](https://packagist.org/packages/grafite/crudmaker) author
+* [Scott Carpenter](https://github.com/squatto) - current package author
+
 
 ## Requirements
 
-1. PHP 7+
+1. PHP 7.2+
 2. OpenSSL
+3. Laravel 6.0+
 
 ## Compatibility and Support
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
+| 6.x | 1.5.x | yes |
 | 5.6.x | 1.4.x | no |
 | 5.5.x | 1.3.x | no |
 | 5.4.x | 1.2.x | no |
@@ -30,7 +29,7 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 ## Documentation
 
-```
+```shell script
 php artisan crudmaker:new {name or snake_names}
 {--api}
 {--ui=bootstrap}
@@ -62,8 +61,9 @@ yourapp.com/api/v1/books
 There is only one supported CSS framework (Bootstrap). Without the UI option specified the CrudMaker will use the plain HTML view which isn't very nice looking.
 
 Both expect a dashboard parent view, this can be generated with the following commands:
-```
-artisan grafite:build bootstrap
+
+```shell script
+php artisan grafite:build bootstrap
 ```
 
 These re-skin your views with either of the CSS frameworks.
@@ -85,8 +85,8 @@ The migration option will add the migration file to your migrations directory, u
 
 You can define the table schema with the structure below. The field types should match what would be the Schema builder.
 
-```
---schema="id:increments,name:string"
+```shell script
+--schema="id:bigIncrements,name:string"
 ```
 
 The following column types are available:
@@ -122,14 +122,14 @@ The following column types are available:
 
 #### Want further definitions?
 
-```
---schema="id:increments|first,user_id:integer|unsigned,name:string|nullable|after('id'),age:integer|default(0)"
+```shell script
+--schema="id:bigIncrements|first,user_id:integer|unsigned,name:string|nullable|after('id'),age:integer|default(0)"
 ```
 
 You can even handle some parameters such as:
 
-```
---schema="id:increments|first,user_id:integer|unsigned,name:string(45)"
+```shell script
+--schema="id:bigIncrements|first,user_id:integer|unsigned,name:string(45)"
 ```
 
 ## Relationships
@@ -173,79 +173,83 @@ The following components are generated:
 * Views (Bootstrap or Semantic or CSS framework-less)
 * Tests
 * Migration (optional)
+
 Appends to the following Files:
-* app/Http/routes.php
-* database/factories/ModelFactory.php
+* `app/Http/routes.php`
+* `database/factories/ModelFactory.php`
 
 #### Single Word Example (Book):
-```
+
+```shell script
 php artisan crudmaker:new Book
 --migration
---schema="id:increments,title:string,author:string"
+--schema="id:bigIncrements,title:string,author:string"
 ```
 
 When using the default paths for the components, the following files will be generated:
 
-* app/Http/Controllers/BookController.php
-* app/Http/Requests/BookCreateRequest.php
-* app/Http/Requests/BookUpdateRequest.php
-* app/Models/Book/Book.php
-* app/Services/BookService.php
-* resources/views/book/create.blade.php
-* resources/views/book/edit.blade.php
-* resources/views/book/index.blade.php
-* resources/views/book/show.blade.php
-* database/migrations/create_books_table.php
-* tests/BookIntegrationTest.php
-* tests/BookServiceTest.php
+* `app/Http/Controllers/BookController.php`
+* `app/Http/Requests/BookCreateRequest.php`
+* `app/Http/Requests/BookUpdateRequest.php`
+* `app/Models/Book/Book.php`
+* `app/Services/BookService.php`
+* `resources/views/book/create.blade.php`
+* `resources/views/book/edit.blade.php`
+* `resources/views/book/index.blade.php`
+* `resources/views/book/show.blade.php`
+* `database/migrations/create_books_table.php`
+* `tests/BookIntegrationTest.php`
+* `tests/BookServiceTest.php`
 
 #### Snake Name Example (Book_Author):
-```
+
+```shell script
 php artisan crudmaker:new Book_Author
 --migration
---schema="id:increments,firstname:string,lastname:string"
+--schema="id:bigIncrements,firstname:string,lastname:string"
 --withFacade
 ```
 
 When using the default paths for the components, the following files will be generated:
 
-* app/Facades/Books/AuthorServiceFacade.php
-* app/Http/Controllers/Books/AuthorController.php
-* app/Http/Requests/Books/AuthorCreateRequest.php
-* app/Http/Requests/Books/AuthorUpdateRequest.php
-* app/Models/Books/Author/Author.php
-* app/Services/Books/AuthorService.php
-* resources/views/book/author/create.blade.php
-* resources/views/book/author/edit.blade.php
-* resources/views/book/author/index.blade.php
-* resources/views/book/author/show.blade.php
-* database/migrations/create_book_authors_table.php
-* tests/Books/AuthorIntegrationTest.php
-* tests/Books/AuthorServiceTest.php
+* `app/Facades/Books/AuthorServiceFacade.php`
+* `app/Http/Controllers/Books/AuthorController.php`
+* `app/Http/Requests/Books/AuthorCreateRequest.php`
+* `app/Http/Requests/Books/AuthorUpdateRequest.php`
+* `app/Models/Books/Author/Author.php`
+* `app/Services/Books/AuthorService.php`
+* `resources/views/book/author/create.blade.php`
+* `resources/views/book/author/edit.blade.php`
+* `resources/views/book/author/index.blade.php`
+* `resources/views/book/author/show.blade.php`
+* `database/migrations/create_book_authors_table.php`
+* `tests/Books/AuthorIntegrationTest.php`
+* `tests/Books/AuthorServiceTest.php`
 
 #### Single Name Example (Book with API):
-```
+
+```shell script
 php artisan crudmaker:new Book
 --api
 --migration
---schema="id:increments,title:string,author:string"
+--schema="id:bigIncrements,title:string,author:string"
 ```
 
 When using the default paths for the components, the following files will be generated:
 
-* app/Http/Controllers/Api/BookController.php
-* app/Http/Controllers/BookController.php
-* app/Http/Requests/BookCreateRequest.php
-* app/Http/Requests/BookUpdateRequest.php
-* app/Models/Book/Book.php
-* app/Services/BookService.php
-* resources/views/book/create.blade.php
-* resources/views/book/edit.blade.php
-* resources/views/book/index.blade.php
-* resources/views/book/show.blade.php
-* database/migrations/create_books_table.php
-* tests/BookIntegrationTest.php
-* tests/BookServiceTest.php
+* `app/Http/Controllers/Api/BookController.php`
+* `app/Http/Controllers/BookController.php`
+* `app/Http/Requests/BookCreateRequest.php`
+* `app/Http/Requests/BookUpdateRequest.php`
+* `app/Models/Book/Book.php`
+* `app/Services/BookService.php`
+* `resources/views/book/create.blade.php`
+* `resources/views/book/edit.blade.php`
+* `resources/views/book/index.blade.php`
+* `resources/views/book/show.blade.php`
+* `database/migrations/create_books_table.php`
+* `tests/BookIntegrationTest.php`
+* `tests/BookServiceTest.php`
 
 This is an example of what would be generated with the CRUD builder. It has all basic CRUD methods set.
 
@@ -255,7 +259,7 @@ The table CRUD is a wrapper on the CRUD which will parse the table in the databa
 
 *You must make sure the name matches the table name case wise*
 
-```
+```shell script
 php artisan crudmaker:table {name or snake_names}
 {--api}
 {--ui=bootstrap}

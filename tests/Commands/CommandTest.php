@@ -4,6 +4,9 @@ class CommandTest extends TestCase
 {
     public function testCrudMaker()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Not enough arguments (missing: "table")');
+
          $this->app['Illuminate\Contracts\Console\Kernel']->handle(
              $input = new \Symfony\Component\Console\Input\ArrayInput([
                 'command' => 'crudmaker:new',
@@ -11,12 +14,13 @@ class CommandTest extends TestCase
              ]),
              $output = new \Symfony\Component\Console\Output\BufferedOutput
          );
-
-        $this->assertContains('Not enough arguments (missing: "table")', $output->fetch());
     }
 
     public function testCrudTableMaker()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Not enough arguments (missing: "table")');
+
          $this->app['Illuminate\Contracts\Console\Kernel']->handle(
              $input = new \Symfony\Component\Console\Input\ArrayInput([
                 'command' => 'crudmaker:table',
@@ -24,7 +28,5 @@ class CommandTest extends TestCase
              ]),
              $output = new \Symfony\Component\Console\Output\BufferedOutput
          );
-
-        $this->assertContains('Not enough arguments (missing: "table")', $output->fetch());
     }
 }

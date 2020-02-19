@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Grafite\CrudMaker\Services\ValidatorService;
 
@@ -9,7 +10,7 @@ class ValidatorServiceTest extends TestCase
     protected $validator;
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -41,9 +42,9 @@ class ValidatorServiceTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_' => 'App\Http\Requests',
             '_lower_case_' => strtolower('testTable'),
-            '_lower_casePlural_' => str_plural(strtolower('testTable')),
-            '_camel_case_' => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_' => str_plural(camel_case('testTable')),
+            '_lower_casePlural_' => Str::plural(strtolower('testTable')),
+            '_camel_case_' => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_' => Str::plural(Str::camel('testTable')),
             'template_source' => __DIR__.'/../src/Templates',
         ];
     }
@@ -55,7 +56,7 @@ class ValidatorServiceTest extends TestCase
             ->andReturn('bootstrap')
             ->shouldReceive('option')
             ->with('schema')
-            ->andReturn('id:increments,name:string,parent_id:something')
+            ->andReturn('id:bigIncrements,name:string,parent_id:something')
             ->shouldReceive('option')
             ->with('migration')
             ->andReturn(true)
@@ -72,7 +73,7 @@ class ValidatorServiceTest extends TestCase
             ->andReturn('bootstrap');
         $this->command->shouldReceive('option')
             ->with('schema')
-            ->andReturn('id:increments,name:string,parent_id:integer');
+            ->andReturn('id:bigIncrements,name:string,parent_id:integer');
         $this->command->shouldReceive('option')
             ->with('migration')
             ->andReturn(true);
@@ -102,7 +103,7 @@ class ValidatorServiceTest extends TestCase
             ->andReturn('hasOne|App\Parent|parent_id');
         $this->command->shouldReceive('option')
             ->with('schema')
-            ->andReturn('id:increments,name:string,parent_id:integer');
+            ->andReturn('id:bigIncrements,name:string,parent_id:integer');
         $this->command->shouldReceive('option')
             ->with('migration')
             ->andReturn(true);
@@ -138,7 +139,7 @@ class ValidatorServiceTest extends TestCase
             ->andReturn('bootstrap');
         $this->command->shouldReceive('option')
             ->with('schema')
-            ->andReturn('id:increments,name:string,parent_id:integer');
+            ->andReturn('id:bigIncrements,name:string,parent_id:integer');
         $this->command->shouldReceive('option')
             ->with('relationships')
             ->andReturn(null);

@@ -6,7 +6,7 @@ class ModelServiceTest extends TestCase
 {
     protected $service;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->service = app(ModelService::class);
@@ -19,8 +19,8 @@ class ModelServiceTest extends TestCase
         ];
         $result = $this->service->prepareModelRelationships($relationships);
 
-        $this->assertContains('this->hasOne', $result);
-        $this->assertContains('App\Author', $result);
-        $this->assertContains('author()', $result);
+        $this->assertStringContainsString('this->hasOne', $result);
+        $this->assertStringContainsString('App\Author', $result);
+        $this->assertStringContainsString('author()', $result);
     }
 }

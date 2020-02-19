@@ -1,24 +1,31 @@
 {
-    "name": "grafite/crudmaker",
+    "name": "squatto/grafite-crudmaker",
     "description": "An incredibly powerful and some say magical CRUD maker for Laravel",
     "license": "MIT",
     "authors": [
         {
+            "name": "Scott Carpenter",
+            "email": "scott@payforstay.com",
+            "role": "Developer"
+        },
+        {
             "name": "Matt Lantz",
-            "email": "mattlantz@gmail.com"
+            "email": "mattlantz@gmail.com",
+            "role": "Original package developer"
         }
     ],
     "require": {
-        "php": ">=7.0",
-        "doctrine/dbal": "^2.5",
-        "illuminate/support": "^5.5",
-        "grafite/formmaker": "^1.1"
+        "php": "^7.2",
+        "doctrine/dbal": "^2.9",
+        "illuminate/support": "^6.0",
+        "squatto/grafite-formmaker": "^1.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0",
-        "mockery/mockery": "^0.9.4",
-        "mikey179/vfsStream": "^1.6",
-        "orchestra/testbench": "^3.4"
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.0",
+        "mockery/mockery": "^1.0",
+        "mikey179/vfsstream": "^1.6",
+        "orchestra/testbench": "^4.0"
     },
     "autoload": {
         "psr-4": {

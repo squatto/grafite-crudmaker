@@ -10,6 +10,7 @@ use Grafite\CrudMaker\Services\AppService;
 use Grafite\CrudMaker\Services\ConfigService;
 use Grafite\CrudMaker\Services\CrudService;
 use Grafite\CrudMaker\Services\ValidatorService;
+use Illuminate\Support\Str;
 
 class CrudMaker extends Command
 {
@@ -64,7 +65,7 @@ class CrudMaker extends Command
         {--withFacade : Creates a facade that can be bound in your app to access the CRUD service}
         {--migration : Generates a migration file}
         {--asPackage= : Generate the CRUD as a package by setting a directory}
-        {--schema= : Basic schema support ie: id,increments,name:string,parent_id:integer}
+        {--schema= : Basic schema support ie: id:bigIncrements,name:string,parent_id:integer}
         {--relationships= : Define the relationship ie: hasOne|App\Comment|comment,hasOne|App\Rating|rating or relation|class|column (without the _id)}';
 
     /**
@@ -153,7 +154,7 @@ class CrudMaker extends Command
             $framework = ucfirst('lumen');
         }
 
-        $table = ucfirst(str_singular($this->argument('table')));
+        $table = ucfirst(Str::singular($this->argument('table')));
 
         $this->validator->validateSchema($this);
         $this->validator->validateOptions($this);
@@ -172,7 +173,7 @@ class CrudMaker extends Command
         ];
 
         if ($this->option('asPackage')) {
-            $newPath = base_path($this->option('asPackage').'/'.str_plural($table));
+            $newPath = base_path($this->option('asPackage').'/'.Str::plural($table));
             if (!is_dir($newPath)) {
                 mkdir($newPath, 755, true);
             }
@@ -209,7 +210,7 @@ class CrudMaker extends Command
         }
 
         if ($this->option('asPackage')) {
-            $moduleDirectory = base_path($this->option('asPackage').'/'.str_plural($table));
+            $moduleDirectory = base_path($this->option('asPackage').'/'.Str::plural($table));
             $config = array_merge($config, [
                 '_path_package_' => $moduleDirectory,
                 '_path_facade_' => $moduleDirectory.'/Facades',
@@ -221,12 +222,12 @@ class CrudMaker extends Command
                 '_path_tests_' => $moduleDirectory.'/Tests',
                 '_path_request_' => $moduleDirectory.'/Requests',
                 '_path_routes_' => $moduleDirectory.'/Routes/web.php',
-                '_namespace_services_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Services',
-                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Facades',
-                '_namespace_model_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Models',
-                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Controllers',
-                '_namespace_request_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Requests',
-                '_namespace_package_' => $appNamespace.'\\'.ucfirst(str_plural($table)),
+                '_namespace_services_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Services',
+                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Facades',
+                '_namespace_model_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Models',
+                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Controllers',
+                '_namespace_request_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Requests',
+                '_namespace_package_' => $appNamespace.'\\'.ucfirst(Str::plural($table)),
             ]);
 
             if (! is_dir($moduleDirectory.'/Routes')) {

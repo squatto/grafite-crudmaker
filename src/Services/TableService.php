@@ -133,7 +133,7 @@ class TableService
 
         foreach ($columns as $key => $column) {
             if ($key === 'id') {
-                $column['type'] = 'increments';
+                $column['type'] = 'bigIncrements';
             }
 
             $columnStringArray[] = $key.':'.$this->columnNameCheck($column['type']);
