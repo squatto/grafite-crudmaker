@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Grafite\CrudMaker\Services\ConfigService;
 
@@ -43,9 +44,9 @@ class ConfigServiceTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
             '_lower_case_'               => strtolower('testTable'),
-            '_lower_casePlural_'         => str_plural(strtolower('testTable')),
-            '_camel_case_'               => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_'         => str_plural(camel_case('testTable')),
+            '_lower_casePlural_'         => Str::plural(strtolower('testTable')),
+            '_camel_case_'               => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_'         => Str::plural(Str::camel('testTable')),
         ];
 
         $this->sectionedConfig = [
@@ -86,7 +87,7 @@ class ConfigServiceTest extends TestCase
                 'serviceOnly' => false,
                 'withFacade' => false,
                 'migration' => true,
-                'schema' => 'id:increments,name:string',
+                'schema' => 'id:bigIncrements,name:string',
                 'relationships' => null,
                 'withBaseService' => false
             ]
@@ -114,6 +115,6 @@ class ConfigServiceTest extends TestCase
     {
         $this->app['config']->set('crudmaker.template_source', __DIR__.'/../../src/Templates/Laravel');
         $config = $this->service->getTemplateConfig('Laravel', 'home');
-        $this->assertContains('Templates/Laravel', $config);
+        $this->assertStringContainsString('Templates/Laravel', $config);
     }
 }

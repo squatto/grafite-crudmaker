@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Grafite\CrudMaker\Services\CrudService;
 
@@ -57,10 +58,10 @@ class CrudServiceTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
             '_lower_case_'               => strtolower('testTable'),
-            '_lower_casePlural_'         => str_plural(strtolower('testTable')),
-            '_camel_case_'               => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_'         => str_plural(camel_case('testTable')),
-            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case('testTable'))),
+            '_lower_casePlural_'         => Str::plural(strtolower('testTable')),
+            '_camel_case_'               => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_'         => Str::plural(Str::camel('testTable')),
+            '_ucCamel_casePlural_'       => ucfirst(Str::plural(Str::camel('testTable'))),
             'template_source'            => __DIR__.'/../../src/Templates/Laravel',
             'options-serviceOnly'        => false,
             'options-apiOnly'            => false,
@@ -68,7 +69,7 @@ class CrudServiceTest extends TestCase
             'options-withBaseService'    => false,
             'options-migration'          => true,
             'options-api'                => true,
-            'options-schema'             => 'id:increments,name:string',
+            'options-schema'             => 'id:bigIncrements,name:string',
         ];
     }
 
@@ -81,8 +82,8 @@ class CrudServiceTest extends TestCase
         $serviceContents = $crud->getChild('Services/TestTableService.php');
 
         $this->assertTrue($crud->hasChild('Services/TestTableService.php'));
-        $this->assertContains('class TestTable', $modelContents->getContent());
-        $this->assertContains('class TestTableService', $serviceContents->getContent());
+        $this->assertStringContainsString('class TestTable', $modelContents->getContent());
+        $this->assertStringContainsString('class TestTableService', $serviceContents->getContent());
     }
 
     public function testGenerateAppBased()
@@ -95,8 +96,8 @@ class CrudServiceTest extends TestCase
         $routesContents = $crud->getChild('Http/routes.php');
 
         $this->assertTrue($crud->hasChild('Http/Controllers/TestTablesController.php'));
-        $this->assertContains('class TestTablesController', $controllerContents->getContent());
-        $this->assertContains('TestTablesController', $routesContents->getContent());
+        $this->assertStringContainsString('class TestTablesController', $controllerContents->getContent());
+        $this->assertStringContainsString('TestTablesController', $routesContents->getContent());
     }
 
     public function testGenerateAPI()
@@ -109,7 +110,7 @@ class CrudServiceTest extends TestCase
         $routesContents = $crud->getChild('Http/api-routes.php');
 
         $this->assertTrue($crud->hasChild('Http/Controllers/Api/TestTablesController.php'));
-        $this->assertContains('class TestTablesController', $controllerContents->getContent());
-        $this->assertContains('TestTablesController', $routesContents->getContent());
+        $this->assertStringContainsString('class TestTablesController', $controllerContents->getContent());
+        $this->assertStringContainsString('TestTablesController', $routesContents->getContent());
     }
 }

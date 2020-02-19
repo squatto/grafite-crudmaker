@@ -20,61 +20,61 @@ class ArtisanTest extends TestCase
             '--migration' => true,
             '--api' => true,
             '--ui' => 'bootstrap',
-            '--schema' => 'id:increments,name:string(200),price:decimal(10,4),ibsn:integer|unsigned|references(\'id\')|on(\'products\')|onDelete(\'restrict\')',
+            '--schema' => 'id:bigIncrements,name:string(200),price:decimal(10,4),ibsn:integer|unsigned|references(\'id\')|on(\'products\')|onDelete(\'restrict\')',
         ]);
     }
 
     public function testApi()
     {
         $file = $this->destinationDir.'/app/Http/Controllers/Api/BooksController.php';
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
         $contents = file_get_contents($file);
-        $this->assertContains('class BooksController extends Controller', $contents);
+        $this->assertStringContainsString('class BooksController extends Controller', $contents);
     }
 
     public function testController()
     {
         $file = $this->destinationDir.'/app/Http/Controllers/BooksController.php';
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
         $contents = file_get_contents($file);
-        $this->assertContains('class BooksController extends Controller', $contents);
+        $this->assertStringContainsString('class BooksController extends Controller', $contents);
     }
 
     public function testModels()
     {
         $file = $this->destinationDir.'/app/Models/Book.php';
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
         $contents = file_get_contents($file);
-        $this->assertContains('class Book extends Model', $contents);
+        $this->assertStringContainsString('class Book extends Model', $contents);
     }
 
     public function testSchema()
     {
         $files = glob($this->destinationDir.'/database/migrations/*_create_books_table.php');
-        $this->assertTrue(file_exists($files[0]));
+        $this->assertFileExists($files[0]);
         $contents = file_get_contents($files[0]);
-        $this->assertContains('$table->decimal(\'price\',10,4);', $contents);
-        $this->assertContains('$table->integer(\'ibsn\')->unsigned()->references(\'id\')->on(\'products\')->onDelete(\'restrict\');', $contents);
+        $this->assertStringContainsString('$table->decimal(\'price\',10,4);', $contents);
+        $this->assertStringContainsString('$table->integer(\'ibsn\')->unsigned()->references(\'id\')->on(\'products\')->onDelete(\'restrict\');', $contents);
     }
 
     public function testRequest()
     {
         $fileA = $this->destinationDir.'/app/Http/Requests/BookCreateRequest.php';
         $fileB = $this->destinationDir.'/app/Http/Requests/BookUpdateRequest.php';
-        $this->assertTrue(file_exists($fileA));
-        $this->assertTrue(file_exists($fileB));
+        $this->assertFileExists($fileA);
+        $this->assertFileExists($fileB);
         $contentsA = file_get_contents($fileA);
         $contentsB = file_get_contents($fileB);
-        $this->assertContains('class BookCreateRequest extends FormRequest', $contentsA);
-        $this->assertContains('class BookUpdateRequest extends FormRequest', $contentsB);
+        $this->assertStringContainsString('class BookCreateRequest extends FormRequest', $contentsA);
+        $this->assertStringContainsString('class BookUpdateRequest extends FormRequest', $contentsB);
     }
 
     public function testService()
     {
         $file = $this->destinationDir.'/app/Services/BookService.php';
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
         $contents = file_get_contents($file);
-        $this->assertContains('class BookService', $contents);
+        $this->assertStringContainsString('class BookService', $contents);
     }
 
     public function testRoutes()
@@ -82,35 +82,35 @@ class ArtisanTest extends TestCase
         $file = $this->destinationDir.'/routes/web.php';
         $contents = file_get_contents($file);
 
-        $this->assertContains('BooksController', $contents);
-        $this->assertContains('\'as\' => \'books.search\'', $contents);
-        $this->assertContains('\'uses\' => \'BooksController@search\'', $contents);
+        $this->assertStringContainsString('BooksController', $contents);
+        $this->assertStringContainsString('\'as\' => \'books.search\'', $contents);
+        $this->assertStringContainsString('\'uses\' => \'BooksController@search\'', $contents);
     }
 
     public function testViews()
     {
         $fileA = $this->destinationDir.'/resources/views/books/index.blade.php';
         $contentsA = file_get_contents($fileA);
-        $this->assertTrue(file_exists($fileA));
-        $this->assertContains('$books', $contentsA);
+        $this->assertFileExists($fileA);
+        $this->assertStringContainsString('$books', $contentsA);
 
         $fileB = $this->destinationDir.'/resources/views/books/edit.blade.php';
         $contentsB = file_get_contents($fileB);
-        $this->assertTrue(file_exists($fileB));
-        $this->assertContains('$book', $contentsB);
+        $this->assertFileExists($fileB);
+        $this->assertStringContainsString('$book', $contentsB);
     }
 
     public function testTest()
     {
         $fileA = $this->destinationDir.'/tests/Feature/BookAcceptanceTest.php';
         $contentsA = file_get_contents($fileA);
-        $this->assertTrue(file_exists($fileA));
-        $this->assertContains('class BookAcceptanceTest', $contentsA);
+        $this->assertFileExists($fileA);
+        $this->assertStringContainsString('class BookAcceptanceTest', $contentsA);
 
         $fileB = $this->destinationDir.'/tests/Unit/BookServiceTest.php';
         $contentsB = file_get_contents($fileB);
-        $this->assertTrue(file_exists($fileB));
-        $this->assertContains('class BookServiceTest', $contentsB);
+        $this->assertFileExists($fileB);
+        $this->assertStringContainsString('class BookServiceTest', $contentsB);
     }
 
     public function testFactory()
@@ -118,8 +118,8 @@ class ArtisanTest extends TestCase
         $file = $this->destinationDir.'/database/factories/bookFactory.php';
         $contents = file_get_contents($file);
 
-        $this->assertContains('Book::class', $contents);
-        $this->assertContains('$factory->define(', $contents);
+        $this->assertStringContainsString('Book::class', $contents);
+        $this->assertStringContainsString('$factory->define(', $contents);
     }
 
     public function tearDown(): void
