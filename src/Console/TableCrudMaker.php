@@ -3,7 +3,6 @@
 namespace Grafite\CrudMaker\Console;
 
 use Exception;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Grafite\CrudMaker\Services\TableService;
@@ -11,8 +10,6 @@ use Illuminate\Support\Str;
 
 class TableCrudMaker extends Command
 {
-    use DetectsApplicationNamespace;
-
     /**
      * The console command name.
      *
