@@ -111,7 +111,14 @@ class DatabaseGenerator
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
                 $migrationData = $this->filesystem->get($file->getPathname());
-                $migrationData = str_replace("\$table->bigIncrements('id');", $parsedTable, $migrationData);
+                $migrationData = str_replace(
+                    [
+                        "\$table->id();",
+                        "\$table->bigIncrements('id');"
+                    ],
+                    $parsedTable,
+                    $migrationData
+                );
                 $this->filesystem->put($file->getPathname(), $migrationData);
             }
         }
