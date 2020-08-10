@@ -15,14 +15,15 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 ## Requirements
 
-1. PHP 7.2+
+1. PHP 7.3+
 2. OpenSSL
-3. Laravel 6.0+
+3. Laravel 7.0+
 
 ## Compatibility and Support
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
+| 7.x | 1.6.x | no |
 | 6.x | 1.5.x | no |
 | 5.6.x | 1.4.x | no |
 | 5.5.x | 1.3.x | no |
