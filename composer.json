@@ -30,10 +30,7 @@
     "autoload": {
         "psr-4": {
             "Grafite\\CrudMaker\\": "src/"
-        },
-        "files": [
-            "src/Helpers/namespace.php"
-        ]
+        }
     },
     "autoload-dev": {
         "classmap": [
