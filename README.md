@@ -1,6 +1,6 @@
 # CrudMaker
 
-> IMPORTANT: this fork's entire purpose is to enable compatibility with Laravel 6.x and beyond.  
+> IMPORTANT: this fork's entire purpose is to enable compatibility with Laravel 8.x and beyond.  
 > **OUTSIDE OF ENSURING COMPATIBILITY, NO FEATURE ADDITIONS/CHANGES OR BUG FIXES WILL BE MADE!**
 
 **CrudMaker** - An incredibly powerful and some say magical CRUD maker for Laravel
@@ -17,12 +17,13 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 1. PHP 7.3+
 2. OpenSSL
-3. Laravel 7.0+
+3. Laravel 8.0+
 
 ## Compatibility and Support
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
+| 8.x | 1.7.x | no |
 | 7.x | 1.6.x | no |
 | 6.x | 1.5.x | no |
 | 5.6.x | 1.4.x | no |
